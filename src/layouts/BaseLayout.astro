@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import type PageProps from '../lib/types/pageProps';
+import { pwaInfo } from 'virtual:pwa-info';
+import { pwaAssetsHead } from 'virtual:pwa-assets/head';
+
+const props = Astro.props as PageProps;
+
+const siteName = 'Big Book Covers';
+const title = `${props.title ? props.title + ' - ' : ''}${siteName}`;
+const description = 'Download high quality cover images';
+const imageUrl = new URL(props.image || '/images/preview.png', Astro.url);
+const imageType = 'image/' + (props.imageType || 'png');
+const imageWidth = (props.imageWidth || 1200).toString();
+const imageHeight = (props.imageHeight || 630).toString();
+---
+
+<!doctype html>
+<html lang="en" class="bg-base-200 size-full">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<meta name="generator" content={Astro.generator} />
+
+		<title>{title}</title>
+		<meta name="description" content={description} />
+
+		<meta property="og:title" content={title} />
+		<meta property="og:site_name" content={siteName} />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="object" />
+
+		<meta property="og:image" content={imageUrl} />
+		<meta property="og:image:type" content={imageType} />
+		<meta property="og:image:width" content={imageWidth} />
+		<meta property="og:image:height" content={imageHeight} />
+		<meta property="og:image:alt" content={title} />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta property="twitter:domain" content={Astro.url.hostname} />
+		<meta property="twitter:url" content={Astro.url} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={imageUrl} />
+
+		{pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+		{
+			pwaAssetsHead.themeColor && (
+				<meta name="theme-color" content={pwaAssetsHead.themeColor.content} />
+			)
+		}
+		{pwaAssetsHead.links.map((link) => <link {...link} />)}
+
+		<script src="/src/lib/pwa.ts"></script>
+	</head>
+	<body class="bg-base-200 size-full overflow-x-hidden overflow-y-auto">
+		<slot />
+	</body>
+</html>
+
+<script>
+	import { themeSetting } from '../lib/svelte/settings.svelte.ts';
+	themeSetting.load();
+	if (themeSetting.value === 'system') document.documentElement.removeAttribute('data-theme');
+	else document.documentElement.setAttribute('data-theme', themeSetting.value);
+</script>

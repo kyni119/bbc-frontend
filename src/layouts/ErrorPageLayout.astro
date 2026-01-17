@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import type PageProps from '../lib/types/pageProps';
+import { Home } from 'lucide-svelte';
+
+const props = Astro.props as PageProps & { code?: number; message?: string };
+
+const code = props.code || 0;
+const message = props.message || 'Unknown Error';
+---
+
+<BaseLayout {...props} title={`Error ${code}`}>
+	<div
+		class="from-base-100 via-base-200 to-base-300 flex size-full h-full w-full flex-col items-center justify-center gap-1 bg-linear-to-br p-4 font-bold"
+	>
+		<p class="text-error text-4xl">ERROR</p>
+		<h1
+			class="from-primary via-secondary to-base-content bg-gradient-to-r bg-clip-text text-8xl text-transparent"
+		>
+			{code}
+		</h1>
+		<p class="text-2xl">{message}</p>
+		<a tabindex="0" href="/" class="btn btn-primary m-4">
+			<Home class="size-6" />
+			<span>GO HOME</span>
+		</a>
+	</div>
+</BaseLayout>

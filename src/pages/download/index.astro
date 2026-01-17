@@ -1,0 +1,13 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import DownloadPage from '../../components/DownloadPage.svelte';
+---
+
+<PageLayout title="Download">
+	<div class="flex grow flex-col items-center p-4">
+		<noscript>Please enable JavaScript to download covers</noscript>
+
+		{/* @ts-expect-error Svelte 5 type compatibility issue */}
+		<DownloadPage client:load />
+	</div>
+</PageLayout>

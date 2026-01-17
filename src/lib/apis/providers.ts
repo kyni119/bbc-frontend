@@ -1,0 +1,198 @@
+export interface Provider {
+	id: string;
+	name: string;
+	icon: string;
+	locale: 'en' | 'ja' | 'de' | 'it' | 'es' | 'es-mx';
+	colors: {
+		primary: string;
+		secondary: string;
+	};
+	ignoreErrors?: boolean;
+	supportsBookPages?: boolean;
+	volumePrefix?: string;
+}
+
+export const bookLive: Provider = {
+	id: 'bl',
+	name: 'BookLive',
+	icon: '/images/providers/bl.svg',
+	locale: 'ja',
+	colors: {
+		primary: '#F9A74A',
+		secondary: '#F87313',
+	},
+};
+
+export const bookWalker: Provider = {
+	id: 'bw',
+	name: 'BookWalker',
+	icon: '/images/providers/bw.svg',
+	locale: 'ja',
+	colors: {
+		primary: '#009844',
+		secondary: '#009844',
+	},
+};
+
+export const bookWalkerReader: Provider = {
+	id: 'bw-r',
+	name: 'BookWalker Preview',
+	icon: '/images/providers/bw.svg',
+	locale: 'ja',
+	colors: {
+		primary: '#009844',
+		secondary: '#50aa7a',
+	},
+	ignoreErrors: true,
+	supportsBookPages: true,
+};
+
+export const bookWalkerGlobal: Provider = {
+	id: 'bw-g',
+	name: 'BookWalker Global',
+	icon: '/images/providers/bw.svg',
+	locale: 'en',
+	colors: {
+		primary: '#3498db',
+		secondary: '#3498db',
+	},
+};
+
+export const bookWalkerGlobalReader: Provider = {
+	id: 'bw-gr',
+	name: 'BookWalker Global Preview',
+	icon: '/images/providers/bw.svg',
+	locale: 'en',
+	colors: {
+		primary: '#3498db',
+		secondary: '#6db5e5',
+	},
+	ignoreErrors: true,
+	supportsBookPages: true,
+};
+
+export const bookWalkerWayomi: Provider = {
+	id: 'bw-wa',
+	name: 'BookWalker Wayomi',
+	icon: '/images/providers/bw.svg',
+	locale: 'ja',
+	colors: {
+		primary: '#00a4e5',
+		secondary: '#00a4e5',
+	},
+	volumePrefix: 'Chapter',
+};
+
+export const bookWalkerWayomiReader: Provider = {
+	id: 'bw-war',
+	name: 'BookWalker Wayomi Preview',
+	icon: '/images/providers/bw.svg',
+	locale: 'ja',
+	colors: {
+		primary: '#00a4e5',
+		secondary: '#26bcfb',
+	},
+	ignoreErrors: true,
+	supportsBookPages: true,
+	volumePrefix: 'Chapter',
+};
+
+export const amazon: Provider = {
+	id: 'amz',
+	name: 'Amazon',
+	icon: '/images/providers/amz.svg',
+	locale: 'en',
+	colors: {
+		primary: '#ffa700',
+		secondary: '#ffa700',
+	},
+	ignoreErrors: true,
+};
+
+export const amazonJapan: Provider = {
+	id: 'amz-jp',
+	name: 'Amazon Japan',
+	icon: '/images/providers/amz.svg',
+	locale: 'ja',
+	colors: {
+		primary: '#ffa700',
+		secondary: '#fec254',
+	},
+	ignoreErrors: true,
+};
+
+export const amazonItaly: Provider = {
+	id: 'amz-it',
+	name: 'Amazon Italy',
+	icon: '/images/providers/amz.svg',
+	locale: 'it',
+	colors: {
+		primary: '#ffa700',
+		secondary: '#fec254',
+	},
+	ignoreErrors: true,
+};
+
+export const amazonSpain: Provider = {
+	id: 'amz-es',
+	name: 'Amazon Spain',
+	icon: '/images/providers/amz.svg',
+	locale: 'es',
+	colors: {
+		primary: '#ffa700',
+		secondary: '#fec254',
+	},
+	ignoreErrors: true,
+};
+
+export const amazonMexico: Provider = {
+	id: 'amz-mx',
+	name: 'Amazon Mexico',
+	icon: '/images/providers/amz.svg',
+	locale: 'es-mx',
+	colors: {
+		primary: '#ffa700',
+		secondary: '#fec254',
+	},
+	ignoreErrors: true,
+};
+
+export const amazonGermany: Provider = {
+	id: 'amz-de',
+	name: 'Amazon Germany',
+	icon: '/images/providers/amz.svg',
+	locale: 'de',
+	colors: {
+		primary: '#ffa700',
+		secondary: '#fec254',
+	},
+	ignoreErrors: true,
+};
+
+const allProviders: Provider[] = [
+	bookLive,
+	bookWalker,
+	bookWalkerReader,
+	bookWalkerGlobal,
+	bookWalkerGlobalReader,
+	bookWalkerWayomi,
+	bookWalkerWayomiReader,
+	amazon,
+	amazonJapan,
+	amazonItaly,
+	amazonSpain,
+	amazonMexico,
+	amazonGermany,
+];
+
+export const defaultProviders = [
+	bookLive,
+	bookWalker,
+	bookWalkerReader,
+	bookWalkerGlobal,
+	bookWalkerGlobalReader,
+	amazon,
+	amazonJapan,
+];
+
+export default allProviders;

@@ -1,0 +1,5 @@
+User-Agent: *
+Disallow: /cgi-bin/
+Disallow: /cdn-cgi/
+
+Sitemap: https://covers.roler.dev/sitemap-index.xml

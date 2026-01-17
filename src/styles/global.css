@@ -1,0 +1,82 @@
+@import '@fontsource-variable/nunito';
+@import '@fontsource/zen-maru-gothic/300';
+@import '@fontsource/zen-maru-gothic/400';
+@import '@fontsource/zen-maru-gothic/500';
+@import '@fontsource/zen-maru-gothic/700';
+@import '@fontsource/zen-maru-gothic/900';
+@import 'tailwindcss';
+@plugin 'daisyui';
+
+@theme {
+	--default-font-family: 'Nunito Variable', 'Zen Maru Gothic';
+}
+
+@plugin 'daisyui/theme' {
+	name: 'light';
+	default: true;
+	prefersdark: false;
+	color-scheme: 'light';
+	--color-base-100: oklch(90% 0.04 190);
+	--color-base-200: oklch(95% 0.03 195);
+	--color-base-300: oklch(98% 0.02 200);
+	--color-base-content: oklch(25% 0.02 220);
+	--color-primary: oklch(70% 0.15 190);
+	--color-primary-content: oklch(30% 0.05 195);
+	--color-secondary: oklch(75% 0.18 340);
+	--color-secondary-content: oklch(30% 0.05 195);
+	--color-accent: oklch(85% 0.12 165);
+	--color-accent-content: oklch(30% 0.05 195);
+	--color-neutral: oklch(35% 0.02 240);
+	--color-neutral-content: oklch(98% 0.01 200);
+	--color-info: oklch(65% 0.16 195);
+	--color-info-content: oklch(100% 0 0);
+	--color-success: oklch(72% 0.18 150);
+	--color-success-content: oklch(30% 0.05 195);
+	--color-warning: oklch(80% 0.15 85);
+	--color-warning-content: oklch(30% 0.02 85);
+	--color-error: oklch(65% 0.22 25);
+	--color-error-content: oklch(98% 0.01 25);
+	--radius-selector: 2rem;
+	--radius-field: 1rem;
+	--radius-box: 0.25rem;
+	--size-selector: 0.25rem;
+	--size-field: 0.21875rem;
+	--border: 2px;
+	--depth: 1;
+	--noise: 0;
+}
+
+@plugin 'daisyui/theme' {
+	name: 'dark';
+	default: false;
+	prefersdark: true;
+	color-scheme: 'dark';
+	--color-base-100: oklch(20% 0.03 220);
+	--color-base-200: oklch(15% 0.02 225);
+	--color-base-300: oklch(25% 0.04 215);
+	--color-base-content: oklch(95% 0.02 190);
+	--color-primary: oklch(65% 0.18 192);
+	--color-primary-content: oklch(15% 0.02 220);
+	--color-secondary: oklch(70% 0.2 340);
+	--color-secondary-content: oklch(15% 0.02 340);
+	--color-accent: oklch(75% 0.15 180);
+	--color-accent-content: oklch(15% 0.02 220);
+	--color-neutral: oklch(30% 0.02 235);
+	--color-neutral-content: oklch(95% 0.02 190);
+	--color-info: oklch(60% 0.18 195);
+	--color-info-content: oklch(98% 0.01 195);
+	--color-success: oklch(68% 0.18 150);
+	--color-success-content: oklch(15% 0.02 220);
+	--color-warning: oklch(75% 0.16 85);
+	--color-warning-content: oklch(20% 0.02 85);
+	--color-error: oklch(60% 0.23 25);
+	--color-error-content: oklch(98% 0.01 25);
+	--radius-selector: 2rem;
+	--radius-field: 1rem;
+	--radius-box: 0.25rem;
+	--size-selector: 0.25rem;
+	--size-field: 0.21875rem;
+	--border: 2px;
+	--depth: 1;
+	--noise: 0;
+}

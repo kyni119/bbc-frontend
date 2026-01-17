@@ -1,0 +1,125 @@
+<script lang="ts">
+	import allProviders from '../lib/apis/providers.ts';
+	import type { Provider } from '../lib/apis/providers.ts';
+	import ProviderLabel from './ProviderLabel.svelte';
+	import {
+		appendSvelteSearchParam,
+		getAllSvelteSearchParams,
+		removeSvelteSearchParam,
+	} from '../lib/utils.ts';
+	import { onMount } from 'svelte';
+
+	let {
+		class: className = '',
+		providers = [...allProviders],
+		selected = $bindable([]),
+		onchange,
+		paramsEnabled = true,
+		delayMs = 500,
+	}: {
+		class?: string;
+		providers?: Provider[];
+		selected?: Provider[];
+		onchange?: (providers: Provider[]) => void | Promise<void>;
+		paramsEnabled?: boolean;
+		delayMs?: number;
+	} = $props();
+
+	let pendingSelection = $derived<Provider[]>([...selected]);
+	let debounceTimer = $state<number | undefined>(undefined);
+
+	onMount(() => {
+		if (paramsEnabled) {
+			const providerIds = getAllSvelteSearchParams('provider');
+			if (providerIds.length > 0) {
+				const paramProviders = providers.filter((p) => providerIds.includes(p.id));
+				if (paramProviders.length > 0) {
+					selected = paramProviders;
+				}
+			}
+		}
+	});
+
+	$effect(() => {
+		if (!paramsEnabled) return;
+
+		const selectedIds = selected.map((p) => p.id);
+
+		for (const provider of providers) {
+			const isSelected = selectedIds.includes(provider.id);
+			if (isSelected) {
+				appendSvelteSearchParam('provider', provider.id);
+			} else {
+				removeSvelteSearchParam('provider', provider.id);
+			}
+		}
+	});
+
+	function isProviderSelected(providerId: string): boolean {
+		return pendingSelection.some((p) => p.id === providerId);
+	}
+
+	function changeProvider(e: Event, provider: Provider) {
+		const checkbox = e.target as HTMLInputElement;
+		const providerIndex = pendingSelection.findIndex((p) => p.id === provider.id);
+
+		let newSelection: Provider[];
+		if (checkbox.checked && providerIndex === -1) {
+			newSelection = [...pendingSelection, provider];
+		} else if (!checkbox.checked && providerIndex !== -1) {
+			newSelection = pendingSelection.filter((p) => p.id !== provider.id);
+		} else {
+			return;
+		}
+
+		newSelection.sort((a, b) => {
+			const aIndex = providers.findIndex((p) => p.id === a.id);
+			const bIndex = providers.findIndex((p) => p.id === b.id);
+			return aIndex - bIndex;
+		});
+
+		pendingSelection = newSelection;
+
+		if (debounceTimer !== undefined) {
+			clearTimeout(debounceTimer);
+		}
+
+		debounceTimer = setTimeout(() => {
+			selected = [...pendingSelection];
+			onchange?.(selected);
+			debounceTimer = undefined;
+		}, delayMs) as unknown as number;
+	}
+</script>
+
+<div class="dropdown sm:dropdown-start dropdown-center {className}">
+	<div tabindex="0" role="button" class="btn btn-primary btn-outline h-fit flex-wrap px-4 py-1">
+		{#if selected.length > 0}
+			<span>Providers:</span>
+			{#each selected as provider (provider.id)}
+				<img src={provider.icon} class="size-4" alt="{provider.name} Logo" />
+			{/each}
+		{:else}
+			Select Providers
+		{/if}
+	</div>
+
+	<ul
+		tabindex="-1"
+		class="dropdown-content menu bg-base-100 rounded-box z-1 w-full min-w-69 p-2 shadow-sm"
+	>
+		{#each providers as provider (provider.id)}
+			<li>
+				<label class="label">
+					<input
+						onchange={(e) => changeProvider(e, provider)}
+						type="checkbox"
+						checked={isProviderSelected(provider.id)}
+						class="checkbox checkbox-xs"
+					/>
+					<ProviderLabel {provider} />
+				</label>
+			</li>
+		{/each}
+	</ul>
+</div>

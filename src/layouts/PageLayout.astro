@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import type PageProps from '../lib/types/pageProps';
+import { ArrowLeft, Settings, Heart } from 'lucide-svelte';
+import ErrorAlert from '../components/ErrorAlert.svelte';
+import AppContent from '../components/AppContent.svelte';
+import GlobalSearchBox from '../components/GlobalSearchBox.svelte';
+
+const props = Astro.props as PageProps;
+
+const isRootPath = Astro.url.pathname === '/';
+const isSearchPath = Astro.url.pathname.startsWith('/search');
+---
+
+<BaseLayout {...props}>
+	<ErrorAlert client:load />
+
+	<div class="flex size-full flex-col">
+		<div class="flex max-w-full grow flex-col overflow-x-hidden">
+			{
+				!isRootPath && (
+					<div class="navbar bg-base-200 sticky top-0 left-0 z-10 max-w-full overflow-hidden px-4">
+						<div class="navbar-start gap-2">
+							<a id="nav-back" class="btn btn-ghost btn-circle" href="../" title="Go Back">
+								<ArrowLeft class="size-6" />
+							</a>
+
+							<a
+								href="https://roler.dev/support"
+								target="_blank"
+								class="btn btn-ghost btn-circle hidden sm:inline-flex"
+								title="Support Me"
+							>
+								<Heart class="fill-secondary text-secondary size-6" />
+							</a>
+						</div>
+
+						<div class="navbar-center gap-2">
+							<a
+								class={'btn-ghost btn' + (!isSearchPath ? ' hidden sm:inline-flex' : '')}
+								href="/"
+								title="Big Book Covers"
+							>
+								<h1 class="from-primary to-base-content bg-linear-to-r bg-clip-text text-xl font-bold text-transparent sm:text-2xl">
+									Big Book Covers
+								</h1>
+							</a>
+
+							{!isSearchPath && (
+								<GlobalSearchBox client:load class="inline-flex lg:hidden" size="md" />
+							)}
+						</div>
+
+						<div class="navbar-end gap-2">
+							{!isSearchPath && (
+								<GlobalSearchBox client:load class="hidden lg:inline-flex" size="lg" />
+							)}
+
+							<a class="btn btn-ghost btn-circle" href="/settings" title="Settings">
+								<Settings class="size-6" />
+							</a>
+						</div>
+					</div>
+				)
+			}
+
+			<AppContent client:load>
+				<slot />
+			</AppContent>
+		</div>
+	</div>
+</BaseLayout>
+
+<script>
+	const navBack = document.querySelector<HTMLAnchorElement>('#nav-back');
+	navBack?.addEventListener('click', (event) => {
+		event.preventDefault();
+		window.history.back();
+	});
+</script>
