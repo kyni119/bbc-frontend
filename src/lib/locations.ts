@@ -5,6 +5,7 @@ interface DockLocation {
 	Icon: typeof Icon;
 	label: string;
 	storageKey?: string;
+	onclick?: () => void;
 }
 
 export const searchLocation: DockLocation = {
@@ -12,6 +13,10 @@ export const searchLocation: DockLocation = {
 	Icon: Search,
 	label: 'Search',
 	storageKey: 'last_search_page',
+	onclick: () => {
+		const searchInput = document.querySelectorAll<HTMLInputElement>('input[type="search"]')[1];
+		if (searchInput) searchInput.focus();
+	},
 };
 
 export const downloadLocation: DockLocation = {

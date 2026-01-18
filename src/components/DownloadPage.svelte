@@ -348,7 +348,7 @@
 						<li>
 							<button
 								onclick={() => unfocusAndExecute(() => downloader.toggleSortOrder())}
-								class="xl:hidden"
+								class="disabled:opacity-50 xl:hidden"
 							>
 								{#if downloader.sortOrder === 'asc'}
 									<ChevronUp class="size-4" />
@@ -363,7 +363,7 @@
 						<li>
 							<button
 								onclick={() => unfocusAndExecute(() => downloader.toggleAllBooks())}
-								class="lg:hidden"
+								class="disabled:opacity-50 lg:hidden"
 							>
 								{#if downloader.isAllSelected}
 									<SquareCheckBig class="size-4" />
@@ -382,7 +382,7 @@
 										unfocusAndExecute(() =>
 											downloader.toggleCropCovers(downloader.selectedBooks, downloader.shouldCrop)
 										)}
-									class="md:hidden"
+									class="disabled:opacity-50 md:hidden"
 									disabled={!downloader.isSomeSelected}
 								>
 									<Crop class="size-4" />
@@ -398,7 +398,7 @@
 						<li>
 							<button
 								onclick={() => unfocusAndExecute(() => downloader.openSelectedCovers())}
-								class="sm:hidden"
+								class="disabled:opacity-50 sm:hidden"
 								disabled={!downloader.isSomeSelected}
 							>
 								{#if downloader.selectedBooksToCompare.length > 1}
@@ -414,7 +414,7 @@
 						<li>
 							<button
 								onclick={() => unfocusAndExecute(() => downloader.copySelectedLinks())}
-								class="sm:hidden"
+								class="disabled:opacity-50 sm:hidden"
 								disabled={!downloader.isSomeSelected}
 							>
 								<CopyIcon

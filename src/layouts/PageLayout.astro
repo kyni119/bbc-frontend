@@ -10,15 +10,11 @@ import {
 	aboutLocation,
 	dockLocations,
 	donationLocation,
-	searchLocation,
 	settingsLocation,
 	sourceCodeLocation,
 } from '../lib/locations.ts';
 
-const props = Astro.props as PageProps;
-
-const isRootPath = Astro.url.pathname === '/';
-const isSearchPath = Astro.url.pathname.startsWith(searchLocation.path);
+const props = Astro.props as PageProps & { disableSearch?: boolean; fixedNav?: boolean };
 ---
 
 <BaseLayout {...props}>
@@ -26,71 +22,72 @@ const isSearchPath = Astro.url.pathname.startsWith(searchLocation.path);
 
 	<div class="hidden size-full flex-col sm:flex">
 		<div class="flex max-w-full grow flex-col overflow-x-hidden">
-			{
-				!isRootPath && (
-					<div class="navbar bg-base-200 sticky top-0 left-0 z-10 max-w-full overflow-hidden px-4">
-						<div class="navbar-start gap-2">
-							<a id="nav-back" class="btn btn-ghost btn-circle" href="../" title="Go Back">
-								<ArrowLeft class="size-6" />
-							</a>
-						</div>
+			<div
+				class:list={[
+					'navbar top-0 left-0 z-10 max-w-full overflow-hidden px-4',
+					props.fixedNav ? 'fixed bg-transparent' : 'bg-base-200 sticky',
+				]}
+			>
+				<div class="navbar-start gap-2">
+					<a id="nav-back" class="btn btn-ghost btn-circle" href="../" title="Go Back">
+						<ArrowLeft class="size-6" />
+					</a>
+				</div>
 
-						<div class="navbar-center gap-2">
-							<a
-								class={'btn-ghost btn' + (!isSearchPath ? ' hidden sm:inline-flex' : '')}
-								href="/"
-								title="Big Book Covers"
-							>
-								<AppTitle />
-							</a>
+				<div class="navbar-center gap-2">
+					<a
+						class={'btn-ghost btn' + (!props.disableSearch ? ' hidden sm:inline-flex' : '')}
+						href="/"
+						title="Big Book Covers"
+					>
+						<AppTitle />
+					</a>
 
-							{!isSearchPath && (
-								<GlobalSearchBox client:load class="inline-flex lg:hidden" size="md" />
-							)}
-						</div>
+					{
+						!props.disableSearch && (
+							<GlobalSearchBox client:load class="inline-flex lg:hidden" size="md" />
+						)
+					}
+				</div>
 
-						<div class="navbar-end gap-2">
-							{!isSearchPath && (
-								<GlobalSearchBox client:load class="hidden lg:inline-flex" size="lg" />
-							)}
+				<div class="navbar-end gap-2">
+					{
+						!props.disableSearch && (
+							<GlobalSearchBox client:load class="hidden lg:inline-flex" size="lg" />
+						)
+					}
 
-							<a
-								href={donationLocation.path}
-								target="_blank"
-								class="btn btn-ghost btn-circle hidden xl:inline-flex"
-								title={donationLocation.label}
-							>
-								<donationLocation.Icon class="fill-secondary text-secondary size-6" />
-							</a>
+					<a
+						href={donationLocation.path}
+						target="_blank"
+						class="btn btn-ghost btn-circle hidden xl:inline-flex"
+						title={donationLocation.label}
+					>
+						<donationLocation.Icon class="fill-secondary text-secondary size-6" />
+					</a>
 
-							<a
-								href={sourceCodeLocation.path}
-								target="_blank"
-								class="btn btn-ghost btn-circle hidden lg:inline-flex"
-								title={sourceCodeLocation.label}
-							>
-								<sourceCodeLocation.Icon class="size-6" />
-							</a>
+					<a
+						href={sourceCodeLocation.path}
+						target="_blank"
+						class="btn btn-ghost btn-circle hidden lg:inline-flex"
+						title={sourceCodeLocation.label}
+					>
+						<sourceCodeLocation.Icon class="size-6" />
+					</a>
 
-							<a
-								class="btn btn-ghost btn-circle"
-								href={aboutLocation.path}
-								title={aboutLocation.label}
-							>
-								<aboutLocation.Icon class="size-6" />
-							</a>
+					<a class="btn btn-ghost btn-circle" href={aboutLocation.path} title={aboutLocation.label}>
+						<aboutLocation.Icon class="size-6" />
+					</a>
 
-							<a
-								class="btn btn-ghost btn-circle"
-								href={settingsLocation.path}
-								title={settingsLocation.label}
-							>
-								<settingsLocation.Icon class="size-6" />
-							</a>
-						</div>
-					</div>
-				)
-			}
+					<a
+						class="btn btn-ghost btn-circle"
+						href={settingsLocation.path}
+						title={settingsLocation.label}
+					>
+						<settingsLocation.Icon class="size-6" />
+					</a>
+				</div>
+			</div>
 
 			<AppContent client:load>
 				<slot />
@@ -105,15 +102,17 @@ const isSearchPath = Astro.url.pathname.startsWith(searchLocation.path);
 			</AppContent>
 		</div>
 
-		<div class="dock sticky bottom-0 left-0 shrink-0">
+		<div
+			class:list={[
+				'dock bottom-0 left-0 shrink-0',
+				props.fixedNav ? 'fixed bg-transparent' : 'bg-base-200 sticky',
+			]}
+		>
 			{
 				dockLocations.map(({ path, Icon, label }) => {
 					const isActive = Astro.url.pathname.startsWith(path);
 					return (
-						<a
-							href={isActive ? '#' : path}
-							class={`dock-location ${isActive ? 'dock-active' : ''}`}
-						>
+						<a href={path} class={`dock-location ${isActive ? 'dock-active' : ''}`}>
 							<Icon class="size-6" />
 							<span class="dock-label">{label}</span>
 						</a>
@@ -128,19 +127,32 @@ const isSearchPath = Astro.url.pathname.startsWith(searchLocation.path);
 	import { dockLocations } from '../lib/locations.ts';
 
 	const navBack = document.querySelector<HTMLAnchorElement>('#nav-back');
+
 	navBack?.addEventListener('click', (event) => {
 		event.preventDefault();
 		window.history.back();
 	});
 
-	for (const page of dockLocations) {
-		if (!page.storageKey) continue;
+	// @ts-expect-error low browser compatibility
+	if (window.navigation?.canGoBack === false) navBack?.classList.add('hidden');
 
-		const storedPage = localStorage.getItem(page.storageKey);
-		const dockElement = document.querySelector<HTMLAnchorElement>(
+	for (const page of dockLocations) {
+		let dockElement = document.querySelector<HTMLAnchorElement>(
 			`a.dock-location[href^="${page.path}"]`
 		);
 
-		if (storedPage && dockElement) dockElement.href = storedPage;
+		if (page.storageKey) {
+			const storedPage = localStorage.getItem(page.storageKey);
+			if (storedPage && dockElement) dockElement.href = storedPage;
+		}
+
+		if (dockElement?.classList.contains('dock-active')) {
+			dockElement.addEventListener('click', (e) => {
+				e.preventDefault();
+				page.onclick?.();
+			});
+
+			page.onclick?.();
+		}
 	}
 </script>
