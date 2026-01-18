@@ -62,6 +62,7 @@ export default defineConfig({
 			},
 			workbox: {
 				navigateFallback: '/404',
+				navigateFallbackDenylist: [/sitemap.*\.xml$/, /robots\.txt$/],
 				globPatterns: ['**/*.{css,js,html,svg,png,ico,txt}'],
 				ignoreURLParametersMatching: [/.*/],
 			},
