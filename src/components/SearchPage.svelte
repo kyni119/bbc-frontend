@@ -169,7 +169,8 @@
 												Object.entries(searchResults).forEach(([pId, seriesList]) => {
 													const matchingSeries = seriesList.filter(
 														(s) =>
-															s.title.toLowerCase().trim() === series.title.toLowerCase().trim()
+															s.title.toLowerCase().trim() === series.title.toLowerCase().trim() &&
+															s.type === series.type
 													);
 													matchingSeries.forEach((s) => toggleSeries(pId, s, !isSelectedTemp));
 												});
