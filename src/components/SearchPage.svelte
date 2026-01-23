@@ -190,7 +190,7 @@
 									></button>
 
 									<div
-										class="absolute top-0 left-0 flex w-full flex-row flex-wrap justify-end gap-0.5 p-0.5 sm:gap-1 sm:p-1"
+										class="absolute top-0 right-0 flex w-fit max-w-full flex-row flex-wrap justify-end gap-0.5 p-0.5 sm:gap-1 sm:p-1"
 									>
 										{#if series.bookType === 'manga'}
 											<div class="badge badge-primary badge-xs sm:badge-sm shadow-sm">Manga</div>
