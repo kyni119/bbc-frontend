@@ -12,7 +12,7 @@ import AstroPWA from '@vite-pwa/astro';
 const prodBranch = 'prod';
 const prodSite = 'https://covers.roler.dev';
 const previewSite = process.env.CF_PAGES_BRANCH
-	? `https://${process.env.CF_PAGES_BRANCH}.the-brave-tuber.pages.dev`
+	? `https://${process.env.CF_PAGES_BRANCH}.bbc-frontend.pages.dev`
 	: null;
 const currentTime = new Date();
 
