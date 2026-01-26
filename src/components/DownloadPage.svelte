@@ -72,8 +72,8 @@
 
 	$effect(() => {
 		const removeShortcuts = [
-			addKeyboardShortcut(['ShiftLeft', 'KeyA'], downloader.toggleAllBooks),
-			addKeyboardShortcut(['ShiftRight', 'KeyA'], downloader.toggleAllBooks),
+			addKeyboardShortcut(['ShiftLeft', 'KeyA'], () => downloader.toggleAllBooks()),
+			addKeyboardShortcut(['ShiftRight', 'KeyA'], () => downloader.toggleAllBooks()),
 		];
 
 		return () => {
