@@ -37,8 +37,12 @@ export default defineConfig({
 				item.changefreq = 'daily';
 				item.priority = 0.5;
 				if (itemURL.pathname === '/') {
+					// @ts-ignore
+					item.changefreq = 'monthly';
 					item.priority = 1.0;
 				} else {
+					// @ts-ignore
+					item.changefreq = 'weekly';
 					item.priority = 0.7;
 				}
 

@@ -14,7 +14,9 @@ export const searchLocation: DockLocation = {
 	label: 'Search',
 	storageKey: 'last_search_page',
 	onclick: () => {
-		const searchInput = document.querySelectorAll<HTMLInputElement>('input[type="search"]')[1];
+		const searchInput = document.querySelector<HTMLInputElement>(
+			'#mobile-app-content input[type="search"]'
+		);
 		if (searchInput) searchInput.focus();
 	},
 };

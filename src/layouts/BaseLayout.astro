@@ -8,7 +8,8 @@ const props = Astro.props as PageProps;
 
 const siteName = 'Big Book Covers';
 const title = `${props.title ? props.title + ' - ' : ''}${siteName}`;
-const description = 'Download high quality cover images';
+const description =
+	'Search and download high-resolution manga, light novel and other book covers for your collections, trackers, and apps.';
 const imageUrl = new URL(props.image || '/images/preview.png', Astro.url);
 const imageType = 'image/' + (props.imageType || 'png');
 const imageWidth = (props.imageWidth || 1200).toString();

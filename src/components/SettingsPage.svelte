@@ -22,7 +22,7 @@
 			</legend>
 
 			{#each field.settings as setting, settingIndex (setting.id)}
-				<label class="label text-base-content text-base">
+				<label id={setting.id} class="label text-base-content text-base">
 					<span>{setting.name}</span>
 					{#if setting.tooltip}
 						<div class="tooltip" data-tip={setting.tooltip}>
